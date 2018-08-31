@@ -154,7 +154,9 @@ class ProximitySensor : AwareSensor(), SensorEventListener {
 
         val device = ProximityDevice().apply {
             deviceId = CONFIG.deviceId
+            label = CONFIG.label
             timestamp = System.currentTimeMillis()
+
             maxRange = sensor.maximumRange
             minDelay = sensor.minDelay.toFloat()
             name = sensor.name
@@ -198,12 +200,13 @@ class ProximitySensor : AwareSensor(), SensorEventListener {
         lastValue = event.values[0]
 
         val data = ProximityData().apply {
-            timestamp = currentTime
-            eventTimestamp = event.timestamp
             deviceId = CONFIG.deviceId
+            label = CONFIG.label
+            timestamp = currentTime
+
+            eventTimestamp = event.timestamp
             proximity = event.values[0]
             accuracy = event.accuracy
-            label = CONFIG.label
         }
 
         CONFIG.sensorObserver?.onDataChanged(data)
